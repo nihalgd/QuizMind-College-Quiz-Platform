@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useApp } from "../context/AppContext";
 import Icon from "../components/Icon";
+import { useApp } from "../context/AppContext";
 
 const LoginPage = () => {
   const { login } = useApp();
@@ -9,50 +9,49 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = (event) => {
+    event.preventDefault();
     setError("");
     setLoading(true);
-    setTimeout(() => {
+
+    window.setTimeout(() => {
       const result = login(email, password);
-      if (!result.success) {
-        setError(result.message);
-      }
+      if (!result.success) setError(result.message);
       setLoading(false);
-    }, 600);
+    }, 350);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-brand-600 rounded-2xl mb-4">
-            <Icon name="brain" className="w-9 h-9 text-white" />
+        <div className="mb-8 text-center">
+          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-600">
+            <Icon name="brain" className="h-9 w-9 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">QuizMind</h1>
-          <p className="text-gray-500 mt-1">AI-Powered College Quiz Platform</p>
+          <p className="mt-1 text-gray-500">College quiz management system</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Sign in to your account</h2>
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="mb-6 text-xl font-semibold text-gray-900">Sign in to your account</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-sm text-red-700">
-              <Icon name="alert-circle" className="w-4 h-4 flex-shrink-0" />
+            <div className="mb-4 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              <Icon name="alert-circle" className="h-4 w-4 flex-shrink-0" />
               {error}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Email or Roll Number</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700">Email or Roll Number</label>
               <div className="relative">
-                <Icon name="mail" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Icon name="mail" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
                   type="text"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:border-brand-500 transition-colors"
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm transition-colors focus:border-brand-500"
                   placeholder="Enter your email or roll number"
                   required
                 />
@@ -60,14 +59,14 @@ const LoginPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700">Password</label>
               <div className="relative">
-                <Icon name="lock" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Icon name="lock" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <input
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:border-brand-500 transition-colors"
+                  onChange={(event) => setPassword(event.target.value)}
+                  className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm transition-colors focus:border-brand-500"
                   placeholder="Enter your password"
                   required
                 />
@@ -77,33 +76,60 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 text-white font-medium py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 py-2.5 font-medium text-white transition-colors hover:bg-brand-700 disabled:bg-brand-400"
             >
               {loading ? (
-                <><Icon name="loader-2" className="w-4 h-4 animate-spin" /> Signing in...</>
+                <>
+                  <Icon name="loader-2" className="h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
               ) : (
-                <><Icon name="log-in" className="w-4 h-4" /> Sign In</>
+                <>
+                  <Icon name="log-in" className="h-4 w-4" />
+                  Sign In
+                </>
               )}
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-gray-100">
-            <p className="text-xs font-medium text-gray-500 mb-3">Demo Credentials</p>
+          <div className="mt-6 border-t border-gray-100 pt-6">
+            <p className="mb-3 text-xs font-medium text-gray-500">Demo Credentials</p>
             <div className="space-y-1.5">
-              <button onClick={() => { setEmail("student@skitm.in"); setPassword("password"); }} className="w-full text-left text-xs px-3 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("student@skitm.in");
+                  setPassword("password");
+                }}
+                className="w-full rounded-lg bg-blue-50 px-3 py-2 text-left text-xs text-blue-700 transition-colors hover:bg-blue-100"
+              >
                 <span className="font-semibold">Student:</span> student@skitm.in / password
               </button>
-              <button onClick={() => { setEmail("teacher@skitm.in"); setPassword("password"); }} className="w-full text-left text-xs px-3 py-2 bg-emerald-50 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("teacher@skitm.in");
+                  setPassword("password");
+                }}
+                className="w-full rounded-lg bg-emerald-50 px-3 py-2 text-left text-xs text-emerald-700 transition-colors hover:bg-emerald-100"
+              >
                 <span className="font-semibold">Teacher:</span> teacher@skitm.in / password
               </button>
-              <button onClick={() => { setEmail("admin@skitm.in"); setPassword("password"); }} className="w-full text-left text-xs px-3 py-2 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("admin@skitm.in");
+                  setPassword("password");
+                }}
+                className="w-full rounded-lg bg-purple-50 px-3 py-2 text-left text-xs text-purple-700 transition-colors hover:bg-purple-100"
+              >
                 <span className="font-semibold">Admin:</span> admin@skitm.in / password
               </button>
             </div>
           </div>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">© 2024 QuizMind. All rights reserved.</p>
+        <p className="mt-6 text-center text-xs text-gray-400">Built for role-based college quiz workflows.</p>
       </div>
     </div>
   );

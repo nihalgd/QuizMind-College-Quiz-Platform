@@ -3,6 +3,7 @@ import Icon from "./Icon";
 
 const Navbar = ({ title, showMenuButton = true }) => {
   const { currentUser, logout, sidebarOpen, setSidebarOpen } = useApp();
+
   return (
     <header className="sticky top-0 z-30 border-b border-gray-200 bg-white px-4 py-4 sm:px-6">
       <div className="flex min-w-0 items-center justify-between gap-3">
@@ -20,7 +21,10 @@ const Navbar = ({ title, showMenuButton = true }) => {
           <div className="min-w-0">
             <h2 className="truncate text-lg font-semibold text-gray-900">{title}</h2>
             {currentUser?.role === "student" && (
-              <p className="truncate text-sm text-gray-500">{currentUser.department} · Semester {currentUser.semester}</p>
+              <p className="truncate text-sm text-gray-500">{currentUser.department} - Semester {currentUser.semester}</p>
+            )}
+            {currentUser?.role === "teacher" && (
+              <p className="truncate text-sm text-gray-500">{currentUser.department} Department</p>
             )}
           </div>
         </div>
@@ -29,7 +33,11 @@ const Navbar = ({ title, showMenuButton = true }) => {
             <Icon name="user" className="h-4 w-4 flex-shrink-0" />
             <span className="truncate">{currentUser?.name}</span>
           </div>
-          <button onClick={logout} className="flex flex-shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 sm:px-4">
+          <button
+            type="button"
+            onClick={logout}
+            className="flex flex-shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50 sm:px-4"
+          >
             <Icon name="log-out" className="h-4 w-4" />
             <span className="hidden sm:inline">Logout</span>
           </button>

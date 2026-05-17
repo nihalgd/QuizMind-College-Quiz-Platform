@@ -1,35 +1,45 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { useNavigate as useRouterNavigate } from "react-router-dom";
-import { DUMMY_USERS } from "../data/dummyData";
+import { useAuth } from "./AuthContext";
 
 export const PAGE_ROUTES = {
-  login: "/",
+  login: "/login",
+  home: "/",
   "student-dashboard": "/student/dashboard",
-  "student-units": "/student/units",
+  "student-subjects": "/student/subjects",
+  "student-history": "/student/history",
+  "student-results": "/student/results",
+  "student-units": "/student/subjects",
   "student-quiz": "/student/quiz",
-  "student-result": "/student/result",
+  "student-result": "/student/results",
   "teacher-dashboard": "/teacher/dashboard",
-  "teacher-add-quiz": "/teacher/add-quiz",
+  "teacher-subjects": "/teacher/subjects",
   "teacher-my-quizzes": "/teacher/quizzes",
-  "teacher-quiz-editor": "/teacher/editor",
+  "teacher-create-quiz": "/teacher/create-quiz",
+  "teacher-results": "/teacher/results",
+  "teacher-add-quiz": "/teacher/create-quiz",
+  "teacher-quiz-editor": "/teacher/quizzes/new/edit",
   "admin-dashboard": "/admin/dashboard",
   "admin-teachers": "/admin/teachers",
-  "admin-assign": "/admin/assign",
+  "admin-subjects": "/admin/subjects",
+  "admin-assign-subjects": "/admin/assign-subjects",
+  "admin-students": "/admin/students",
+  "admin-quizzes": "/admin/quizzes",
+  "admin-assign": "/admin/assign-subjects",
 };
 
-const DASHBOARD_ROUTES = {
-  student: PAGE_ROUTES["student-dashboard"],
-  teacher: PAGE_ROUTES["teacher-dashboard"],
+export const DASHBOARD_ROUTES = {
   admin: PAGE_ROUTES["admin-dashboard"],
+  teacher: PAGE_ROUTES["teacher-dashboard"],
+  student: PAGE_ROUTES["student-dashboard"],
 };
 
 const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
   const routerNavigate = useRouterNavigate();
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, login: authLogin, logout: authLogout, setCurrentUser } = useAuth();
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [selectedUnit, setSelectedUnit] = useState(null);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizResult, setQuizResult] = useState(null);
@@ -39,7 +49,6 @@ export const AppProvider = ({ children }) => {
   const navigate = useCallback(
     (pageOrPath, data = {}) => {
       if (Object.prototype.hasOwnProperty.call(data, "subject")) setSelectedSubject(data.subject);
-      if (Object.prototype.hasOwnProperty.call(data, "unit")) setSelectedUnit(data.unit);
       if (Object.prototype.hasOwnProperty.call(data, "quiz")) setSelectedQuiz(data.quiz);
       setSidebarOpen(false);
       routerNavigate(PAGE_ROUTES[pageOrPath] || pageOrPath);
@@ -54,29 +63,24 @@ export const AppProvider = ({ children }) => {
 
   const login = useCallback(
     (email, password) => {
-      const user = DUMMY_USERS.find((candidate) => candidate.email === email && candidate.password === password);
-
-      if (!user) {
-        return { success: false, message: "Invalid credentials" };
+      const result = authLogin(email, password);
+      if (result.success) {
+        routerNavigate(DASHBOARD_ROUTES[result.user.role] || PAGE_ROUTES.login, { replace: true });
       }
-
-      setCurrentUser(user);
-      navigate(DASHBOARD_ROUTES[user.role] || "/");
-      return { success: true, user };
+      return result;
     },
-    [navigate],
+    [authLogin, routerNavigate],
   );
 
   const logout = useCallback(() => {
-    setCurrentUser(null);
+    authLogout();
     setSelectedSubject(null);
-    setSelectedUnit(null);
     setSelectedQuiz(null);
     setQuizAnswers({});
     setQuizResult(null);
     setSidebarOpen(false);
-    routerNavigate(PAGE_ROUTES.login);
-  }, [routerNavigate]);
+    routerNavigate(PAGE_ROUTES.login, { replace: true });
+  }, [authLogout, routerNavigate]);
 
   const value = useMemo(
     () => ({
@@ -84,8 +88,6 @@ export const AppProvider = ({ children }) => {
       setCurrentUser,
       selectedSubject,
       setSelectedSubject,
-      selectedUnit,
-      setSelectedUnit,
       selectedQuiz,
       setSelectedQuiz,
       quizAnswers,
@@ -102,17 +104,17 @@ export const AppProvider = ({ children }) => {
     }),
     [
       currentUser,
-      selectedSubject,
-      selectedUnit,
-      selectedQuiz,
-      quizAnswers,
-      quizResult,
-      sidebarOpen,
-      toast,
-      showToast,
-      navigate,
       login,
       logout,
+      navigate,
+      quizAnswers,
+      quizResult,
+      selectedQuiz,
+      selectedSubject,
+      setCurrentUser,
+      showToast,
+      sidebarOpen,
+      toast,
     ],
   );
 
@@ -121,10 +123,8 @@ export const AppProvider = ({ children }) => {
 
 export const useApp = () => {
   const context = useContext(AppContext);
-
   if (!context) {
     throw new Error("useApp must be used within an AppProvider");
   }
-
   return context;
 };

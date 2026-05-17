@@ -1,0 +1,258 @@
+export const ADMIN_USER = {
+  id: 1,
+  name: "Admin User",
+  email: "admin@skitm.in",
+  password: "password",
+  role: "admin",
+  avatar: "AD",
+};
+
+export const DEFAULT_TEACHERS = [
+  {
+    id: 2,
+    name: "Prof. Khushboo Nagar",
+    email: "teacher@skitm.in",
+    password: "password",
+    role: "teacher",
+    department: "Computer Science",
+    assignedSubjects: [1, 4, 6],
+    avatar: "KN",
+  },
+  {
+    id: 3,
+    name: "Dr. Mamta Punjabi",
+    email: "mamta.punjabi@skitm.in",
+    password: "password",
+    role: "teacher",
+    department: "Computer Science",
+    assignedSubjects: [2, 5],
+    avatar: "MP",
+  },
+  {
+    id: 4,
+    name: "Dr. Ratnalata Gupta",
+    email: "ratnalata.gupta@skitm.in",
+    password: "password",
+    role: "teacher",
+    department: "Information Technology",
+    assignedSubjects: [3],
+    avatar: "RG",
+  },
+];
+
+export const DEFAULT_STUDENTS = [
+  {
+    id: 101,
+    name: "Nihal Goud",
+    email: "student@skitm.in",
+    password: "password",
+    role: "student",
+    rollNo: "CS2023045",
+    department: "Computer Science",
+    semester: "5",
+    avatar: "NG",
+  },
+  {
+    id: 102,
+    name: "Aarohi Sharma",
+    email: "aarohi.sharma@skitm.in",
+    password: "password",
+    role: "student",
+    rollNo: "CS2023049",
+    department: "Computer Science",
+    semester: "5",
+    avatar: "AS",
+  },
+  {
+    id: 103,
+    name: "Rohan Verma",
+    email: "rohan.verma@skitm.in",
+    password: "password",
+    role: "student",
+    rollNo: "IT2023021",
+    department: "Information Technology",
+    semester: "5",
+    avatar: "RV",
+  },
+];
+
+export const DEFAULT_SUBJECTS = [
+  {
+    id: 1,
+    subjectName: "Data Structures and Algorithms",
+    subjectCode: "CS501",
+    semester: "5",
+    assignedTeacherId: 2,
+  },
+  {
+    id: 2,
+    subjectName: "Database Management Systems",
+    subjectCode: "CS502",
+    semester: "5",
+    assignedTeacherId: 3,
+  },
+  {
+    id: 3,
+    subjectName: "Operating Systems",
+    subjectCode: "CS503",
+    semester: "5",
+    assignedTeacherId: 4,
+  },
+  {
+    id: 4,
+    subjectName: "Computer Networks",
+    subjectCode: "CS504",
+    semester: "5",
+    assignedTeacherId: 2,
+  },
+  {
+    id: 5,
+    subjectName: "Software Engineering",
+    subjectCode: "CS505",
+    semester: "5",
+    assignedTeacherId: 3,
+  },
+  {
+    id: 6,
+    subjectName: "Artificial Intelligence",
+    subjectCode: "CS601",
+    semester: "6",
+    assignedTeacherId: 2,
+  },
+];
+
+export const DEFAULT_QUIZZES = [
+  {
+    id: 1001,
+    title: "Arrays and Linked Lists",
+    subjectId: 1,
+    teacherId: 2,
+    difficulty: "Medium",
+    createdAt: "2026-05-01",
+    published: true,
+    questions: [
+      {
+        id: 5001,
+        question: "What is the time complexity of accessing an array element by index?",
+        options: ["O(1)", "O(n)", "O(log n)", "O(n^2)"],
+        correctAnswer: 0,
+      },
+      {
+        id: 5002,
+        question: "Which data structure follows FIFO order?",
+        options: ["Stack", "Queue", "Tree", "Graph"],
+        correctAnswer: 1,
+      },
+      {
+        id: 5003,
+        question: "A singly linked list node stores data and what else?",
+        options: ["Two previous links", "A next link", "A parent link", "A hash key"],
+        correctAnswer: 1,
+      },
+      {
+        id: 5004,
+        question: "Which operation is generally fastest in an array?",
+        options: ["Random access", "Insert at front", "Delete at front", "Merge nodes"],
+        correctAnswer: 0,
+      },
+    ],
+  },
+  {
+    id: 1002,
+    title: "SQL and Normalization",
+    subjectId: 2,
+    teacherId: 3,
+    difficulty: "Hard",
+    createdAt: "2026-05-04",
+    published: true,
+    questions: [
+      {
+        id: 5101,
+        question: "Which SQL command is used to retrieve rows from a table?",
+        options: ["INSERT", "SELECT", "UPDATE", "ALTER"],
+        correctAnswer: 1,
+      },
+      {
+        id: 5102,
+        question: "What does 3NF primarily reduce?",
+        options: ["Redundancy", "Indexes", "Users", "Transactions"],
+        correctAnswer: 0,
+      },
+      {
+        id: 5103,
+        question: "A primary key must be unique and what else?",
+        options: ["Nullable", "Encrypted", "Not null", "Alphabetic"],
+        correctAnswer: 2,
+      },
+    ],
+  },
+  {
+    id: 1003,
+    title: "Process Scheduling Basics",
+    subjectId: 3,
+    teacherId: 4,
+    difficulty: "Easy",
+    createdAt: "2026-05-07",
+    published: false,
+    questions: [
+      {
+        id: 5201,
+        question: "Which scheduler selects processes from the ready queue?",
+        options: ["CPU scheduler", "Disk scheduler", "Network scheduler", "Memory loader"],
+        correctAnswer: 0,
+      },
+      {
+        id: 5202,
+        question: "Round robin scheduling uses which concept?",
+        options: ["Priority only", "Time quantum", "File locks", "Page faults"],
+        correctAnswer: 1,
+      },
+    ],
+  },
+  {
+    id: 1004,
+    title: "OSI Model Fundamentals",
+    subjectId: 4,
+    teacherId: 2,
+    difficulty: "Easy",
+    createdAt: "2026-05-10",
+    published: true,
+    questions: [
+      {
+        id: 5301,
+        question: "How many layers are in the OSI model?",
+        options: ["4", "5", "7", "9"],
+        correctAnswer: 2,
+      },
+      {
+        id: 5302,
+        question: "Which OSI layer handles routing?",
+        options: ["Data Link", "Network", "Session", "Presentation"],
+        correctAnswer: 1,
+      },
+    ],
+  },
+];
+
+export const DEFAULT_ATTEMPTS = [
+  {
+    id: 9001,
+    quizId: 1001,
+    studentId: 101,
+    answers: { 0: 0, 1: 1, 2: 1, 3: 2 },
+    score: 3,
+    totalQuestions: 4,
+    percentage: 75,
+    submittedAt: "2026-05-12T10:30:00.000Z",
+  },
+  {
+    id: 9002,
+    quizId: 1002,
+    studentId: 101,
+    answers: { 0: 1, 1: 0, 2: 2 },
+    score: 3,
+    totalQuestions: 3,
+    percentage: 100,
+    submittedAt: "2026-05-14T08:10:00.000Z",
+  },
+];
