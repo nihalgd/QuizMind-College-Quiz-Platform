@@ -91,42 +91,6 @@ const LoginPage = () => {
               )}
             </button>
           </form>
-
-          <div className="mt-6 border-t border-gray-100 pt-6">
-            <p className="mb-3 text-xs font-medium text-gray-500">Demo Credentials</p>
-            <div className="space-y-1.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("student@skitm.in");
-                  setPassword("password");
-                }}
-                className="w-full rounded-lg bg-blue-50 px-3 py-2 text-left text-xs text-blue-700 transition-colors hover:bg-blue-100"
-              >
-                <span className="font-semibold">Student:</span> student@skitm.in / password
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("teacher@skitm.in");
-                  setPassword("password");
-                }}
-                className="w-full rounded-lg bg-emerald-50 px-3 py-2 text-left text-xs text-emerald-700 transition-colors hover:bg-emerald-100"
-              >
-                <span className="font-semibold">Teacher:</span> teacher@skitm.in / password
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("admin@skitm.in");
-                  setPassword("password");
-                }}
-                className="w-full rounded-lg bg-purple-50 px-3 py-2 text-left text-xs text-purple-700 transition-colors hover:bg-purple-100"
-              >
-                <span className="font-semibold">Admin:</span> admin@skitm.in / password
-              </button>
-            </div>
-          </div>
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-400">Built for role-based college quiz workflows.</p>
