@@ -77,7 +77,7 @@ npm run dev
 
 ## 🌐 Live Demo
 
-🔗 Live Website: https://your-live-link-here.com
+🔗 Live Website: https://quizmind-college-quiz.netlify.app/login
 
 ---
 
