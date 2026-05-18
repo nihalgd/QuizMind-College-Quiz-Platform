@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { ADMIN_USER, DEFAULT_STUDENTS, DEFAULT_TEACHERS } from "../data/seedData";
 import { readStorage, removeStorage, STORAGE_KEYS, writeStorage } from "../services/storage";
+import authService from "../services/authService";
 
 const AuthContext = createContext(null);
 
@@ -38,6 +39,26 @@ export const AuthProvider = ({ children }) => {
     return { success: true, user: publicUser };
   }, []);
 
+  const loginWithBackend = useCallback(async (email, password) => {
+    try {
+      const response = await authService.login(email, password);
+      if (response.success) {
+        const user = response.user;
+        setCurrentUser(user);
+        writeStorage(STORAGE_KEYS.currentUser, user);
+        return { success: true, user };
+      } else {
+        return { success: false, message: response.message || "Login failed" };
+      }
+    } catch (error) {
+      const fallbackUser = login(email, password);
+      if (fallbackUser.success) {
+        return fallbackUser;
+      }
+      return { success: false, message: error.message || "Login failed" };
+    }
+  }, [login]);
+
   const logout = useCallback(() => {
     setCurrentUser(null);
     removeStorage(STORAGE_KEYS.currentUser);
@@ -48,9 +69,10 @@ export const AuthProvider = ({ children }) => {
       currentUser,
       setCurrentUser,
       login,
+      loginWithBackend,
       logout,
     }),
-    [currentUser, login, logout],
+    [currentUser, login, loginWithBackend, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

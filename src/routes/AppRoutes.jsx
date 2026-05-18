@@ -17,6 +17,7 @@ import MySubjects from "../pages/MySubjects";
 import QuizEditor from "../pages/QuizEditor";
 import QuizHistory from "../pages/QuizHistory";
 import QuizPage from "../pages/QuizPage";
+import RegistrationPage from "../pages/RegistrationPage";
 import ResultPage from "../pages/ResultPage";
 import StudentDashboard from "../pages/StudentDashboard";
 import StudentResults from "../pages/StudentResults";
@@ -41,6 +42,7 @@ const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<RootRoute />} />
     <Route path="/login" element={<LoginRoute />} />
+    <Route path="/register" element={<RegistrationPage />} />
 
     <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
       <Route path="/admin" element={<AdminLayout />}>

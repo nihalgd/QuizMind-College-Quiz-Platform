@@ -3,7 +3,7 @@ import Icon from "../components/Icon";
 import { useApp } from "../context/AppContext";
 
 const LoginPage = () => {
-  const { login } = useApp();
+  const { login, navigate } = useApp();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -91,6 +91,18 @@ const LoginPage = () => {
               )}
             </button>
           </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <button
+                onClick={() => navigate("/register")}
+                className="font-medium text-brand-600 transition-colors hover:text-brand-700"
+              >
+                Register here
+              </button>
+            </p>
+          </div>
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-400">Built for role-based college quiz workflows.</p>

@@ -4,6 +4,7 @@ import { useAuth } from "./AuthContext";
 
 export const PAGE_ROUTES = {
   login: "/login",
+  register: "/register",
   home: "/",
   "student-dashboard": "/student/dashboard",
   "student-subjects": "/student/subjects",
@@ -38,7 +39,7 @@ const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
   const routerNavigate = useRouterNavigate();
-  const { currentUser, login: authLogin, logout: authLogout, setCurrentUser } = useAuth();
+  const { currentUser, login: authLogin, loginWithBackend, logout: authLogout, setCurrentUser } = useAuth();
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizAnswers, setQuizAnswers] = useState({});
@@ -72,6 +73,18 @@ export const AppProvider = ({ children }) => {
     [authLogin, routerNavigate],
   );
 
+  const loginBackend = useCallback(
+    async (email, password) => {
+      const result = await loginWithBackend(email, password);
+      if (result.success) {
+        const role = result.user.role || "student";
+        routerNavigate(DASHBOARD_ROUTES[role] || PAGE_ROUTES.login, { replace: true });
+      }
+      return result;
+    },
+    [loginWithBackend, routerNavigate],
+  );
+
   const logout = useCallback(() => {
     authLogout();
     setSelectedSubject(null);
@@ -100,11 +113,13 @@ export const AppProvider = ({ children }) => {
       showToast,
       navigate,
       login,
+      loginBackend,
       logout,
     }),
     [
       currentUser,
       login,
+      loginBackend,
       logout,
       navigate,
       quizAnswers,
